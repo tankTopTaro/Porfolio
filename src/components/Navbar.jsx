@@ -4,7 +4,8 @@ import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { DarkThemeToggle } from 'flowbite-react'
 
 const navigation = [
-  { name: 'Home', href: '#', current: true },
+  { name: 'Home', href: '#home', current: true },
+  { name: 'About Me', href: '#about', current: false },
   { name: 'Projects', href: '#', current: false },
   { name: 'Contact Me', href: '#', current: false },
 ]
@@ -15,7 +16,7 @@ function classNames(...classes) {
 
 export default function MyNavbar() {
   return (
-    <Disclosure as="nav" className="bg-[#131418]">
+    <Disclosure as="nav" className="bg-[#131418] w-full fixed top-0">
       {({ open }) => (
         <>
           <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
