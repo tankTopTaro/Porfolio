@@ -25,13 +25,15 @@ const Gallery = () => {
     }
 
     return (
-        <section className="h-screen pt-20 mt-9" id="projects">
+        <section className="h-screen mx-auto mt-16 px-9 py-6" id="projects">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 {chunkArray(projects, 3).map((chunk, index) => (
-                    <div key={index} className="grid gap-4">
+                    <div key={index} className="grid gap-4 ">
                         {chunk.map((project, subIndex) => (
                             <div key={subIndex}>
-                                <img className="h-auto max-w-full rounded-lg" src={project.src} alt={project.alt} />
+                                <img 
+                                className="h-auto max-w-full rounded-lg border border-gray-300 dark:border-white shadow-lg dark:drop-shadow-[0_10px_8px_rgba(255,255,255,0.25)]" 
+                                src={project.src} alt={project.alt} />
                             </div>
                         ))}
                     </div>

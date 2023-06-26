@@ -1,8 +1,8 @@
-import { Fragment, useState } from 'react'
+import { Fragment, useState, useEffect } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
-import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
+import { Bars3Icon, BellIcon, XMarkIcon, ChevronUpIcon } from '@heroicons/react/24/outline'
 import { DarkThemeToggle } from 'flowbite-react'
-import { Link } from 'react-scroll'
+import { Link, animateScroll as scroll, scroller } from 'react-scroll'
 
 const navigation = [
   { name: 'Home', href: 'home',  },
@@ -16,12 +16,56 @@ function classNames(...classes) {
 
 export default function MyNavbar() {
   const [current, setCurrent] = useState('home')
-  
-  function handleCurrent(href) {
-    setCurrent(href)
+  const [showBackToTop, setShowBackToTop] = useState(false);
+
+  useEffect(() => {
+    function handleScroll() {
+      const heroSectionHeight = 500; // Update with your hero section height
+      const scrollTop = window.scrollY || document.documentElement.scrollTop;
+      setShowBackToTop(scrollTop > heroSectionHeight);
+
+      // Find the active section based on the scroll position
+      const sections = navigation.map((item) => item.href);
+      const activeSection = sections.find((section) => {
+      const element = document.getElementById(section);
+      if (element) {
+        const rect = element.getBoundingClientRect();
+        return rect.top <= 0 && rect.bottom > 0;
+      }
+        return false;
+      });
+
+      if (activeSection) {
+        setCurrent(activeSection);
+      }
+    }
+
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
+  function scrollToTop() {
+    scroll.scrollToTop({
+      duration: 1000,
+      smooth: 'easeInOutQuart',
+    });
+    setCurrent('home');
   }
+
+  function handleCurrent(href) {
+    setCurrent(href);
+    scroller.scrollTo(href, {
+      duration: 1000,
+      smooth: 'easeInOutQuart',
+      offset: -50, // Adjust the offset if needed
+    });
+  }
+
   return (
-    <Disclosure as="nav" className="bg-[#131418] w-full fixed top-0">
+    <>
+    <Disclosure as="nav" className="bg-[#131418] w-full fixed top-0 left-0 z-50" id='top'>
       {({ open }) => (
         <>
           <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
@@ -48,8 +92,8 @@ export default function MyNavbar() {
                         spy 
                         to={item.href}
                         className={classNames(
-                          current === item.href ? 'bg-[#242a2f] text-[#bd6507] pb-7' : 'text-gray-300 hover:text-white',
-                          'px-3 py-2 text-xl font-semibold'
+                          current === item.href ? 'bg-[#242a2f] text-[#bd6507]' : 'text-gray-300 hover:text-white',
+                          'rounded-md px-3 py-2 text-xl font-semibold'
                         )}
                         onClick={() => handleCurrent(item.href)}
                       >
@@ -83,8 +127,8 @@ export default function MyNavbar() {
                         spy 
                         to={item.href}
                         className={classNames(
-                          current === item.href ? 'bg-[#242a2f] text-[#bd6507] pb-3.5' : 'text-gray-300 hover:text-white',
-                          'px-3 py-2 text-l font-semibold'
+                          current === item.href ? 'bg-[#242a2f] text-[#bd6507]' : 'text-gray-300 hover:text-white',
+                          'rounded-md px-3 py-2 text-l font-semibold'
                         )}
                         onClick={() => handleCurrent(item.href)}
                       >
@@ -97,6 +141,18 @@ export default function MyNavbar() {
         </>
       )}
     </Disclosure>
+      {/* Back to Top */}
+      {showBackToTop && (
+      <Link
+          to='top'
+          smooth
+          spy
+          className='z-10 fixed bottom-4 right-4 bg-[#242a2f] dark:bg-white rounded-full p-2 shadow hover:bg-[#bd6507] dark:hover:bg-[#bd6507] text-white dark:text-gray-600 dark:hover:text-white transition-opacity duration-500 ease-in'
+          onClick={scrollToTop}
+          style={{ opacity: showBackToTop ? 1 : 0 }}>
+          <ChevronUpIcon className='h-6 w-6'/>
+      </Link>)}
+    </>
   )
 }
 
