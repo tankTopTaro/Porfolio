@@ -18,6 +18,8 @@ const projects = [
 
 const Gallery = () => {
     let [isOpen, setIsOpen] = useState(false)
+    const [imgSrc, setImgSrc] = useState('')
+    const [imgAlt, setImgAlt] = useState('')
 
     function closeModal() {
         setIsOpen(false)
@@ -27,8 +29,9 @@ const Gallery = () => {
         setIsOpen(true)
     }
 
-    function openDetails(id) {
-        console.log(id)
+    function openDetails(src, alt) {
+        setImgSrc(src)
+        setImgAlt(alt)
         openModal()
     }
 
@@ -41,7 +44,7 @@ const Gallery = () => {
     }
 
     return (
-        <section className="h-screen mx-auto mt-20 px-9 py-1 6" id="projects">
+        <section className="h-screen mx-auto px-9 py-16" id="projects">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 {chunkArray(projects, 3).map((chunk, index) => (
                     <div key={index} className="grid gap-4 ">
@@ -50,13 +53,13 @@ const Gallery = () => {
                                 <img 
                                 className="h-auto max-w-full rounded-lg border border-gray-300 dark:border-white shadow-lg dark:drop-shadow-[0_10px_8px_rgba(255,255,255,0.25)]" 
                                 src={project.src} alt={project.alt} 
-                                onClick={() => openDetails(project.alt)}/>
+                                onClick={() => openDetails(project.src, project.alt)} />
                             </div>
                         ))}
                     </div>
                 ))}
             </div>
-            {isOpen && <ProjectModal isOpen={isOpen} closeModal={closeModal} />}
+            {isOpen && <ProjectModal isOpen={isOpen} closeModal={closeModal} src={imgSrc} alt={imgAlt} />}
         </section>
     )
 }

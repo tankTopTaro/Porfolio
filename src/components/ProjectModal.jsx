@@ -1,7 +1,7 @@
 import { Dialog, Transition } from '@headlessui/react'
 import { Fragment, useState } from 'react'
 
-export default function ProjectModal({isOpen, closeModal}) {
+export default function ProjectModal({isOpen, closeModal, src, alt}) {
   
 
   return (
@@ -36,13 +36,10 @@ export default function ProjectModal({isOpen, closeModal}) {
                     as="h3"
                     className="text-lg font-medium leading-6 text-gray-900"
                   >
-                    Payment successful
+                    {alt}
                   </Dialog.Title>
                   <div className="mt-2">
-                    <p className="text-sm text-gray-500">
-                      Your payment has been successfully submitted. We’ve sent
-                      you an email with all of the details of your order.
-                    </p>
+                    <img src={src} alt={alt} />
                   </div>
 
                   <div className="mt-4">

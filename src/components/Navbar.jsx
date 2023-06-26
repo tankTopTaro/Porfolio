@@ -121,19 +121,19 @@ export default function MyNavbar() {
               {navigation.map((item) => (
                 <Disclosure.Button>
                   <Link
-                        key={item.name}
-                        activeClass='active'
-                        smooth 
-                        spy 
-                        to={item.href}
-                        className={classNames(
-                          current === item.href ? 'bg-[#242a2f] text-[#bd6507]' : 'text-gray-300 hover:text-white',
-                          'rounded-md px-3 py-2 text-l font-semibold'
-                        )}
-                        onClick={() => handleCurrent(item.href)}
-                      >
-                        {item.name}
-                      </Link>
+                    key={item.name}
+                    activeClass='active'
+                    smooth 
+                    spy 
+                    to={item.href}
+                    className={classNames(
+                      current === item.href ? 'bg-[#242a2f] text-[#bd6507]' : 'text-gray-300 hover:text-white',
+                      'rounded-md px-3 py-2 text-l font-semibold'
+                    )}
+                    onClick={() => handleCurrent(item.href)}
+                  >
+                    {item.name}
+                  </Link>
                 </Disclosure.Button>
               ))}
             </div>
