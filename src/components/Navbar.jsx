@@ -1,13 +1,13 @@
-import { Fragment } from 'react'
+import { Fragment, useState } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { DarkThemeToggle } from 'flowbite-react'
+import { Link } from 'react-scroll'
 
 const navigation = [
-  { name: 'Home', href: '#home', current: true },
-  { name: 'About Me', href: '#about', current: false },
-  { name: 'Projects', href: '#', current: false },
-  { name: 'Contact Me', href: '#', current: false },
+  { name: 'Home', href: 'home',  },
+  { name: 'Projects', href: 'projects',  },
+  { name: 'Contact Me', href: 'contact',  },
 ]
 
 function classNames(...classes) {
@@ -15,6 +15,11 @@ function classNames(...classes) {
 }
 
 export default function MyNavbar() {
+  const [current, setCurrent] = useState('home')
+  
+  function handleCurrent(href) {
+    setCurrent(href)
+  }
   return (
     <Disclosure as="nav" className="bg-[#131418] w-full fixed top-0">
       {({ open }) => (
@@ -36,17 +41,20 @@ export default function MyNavbar() {
                 <div className="hidden sm:ml-6 sm:block">
                   <div className="flex space-x-4">
                     {navigation.map((item) => (
-                      <a
+                      <Link
                         key={item.name}
-                        href={item.href}
+                        activeClass='active'
+                        smooth 
+                        spy 
+                        to={item.href}
                         className={classNames(
-                          item.current ? 'bg-[#242a2f] text-[#bd6507] pb-7' : 'text-gray-300 hover:text-white',
+                          current === item.href ? 'bg-[#242a2f] text-[#bd6507] pb-7' : 'text-gray-300 hover:text-white',
                           'px-3 py-2 text-xl font-semibold'
                         )}
-                        aria-current={item.current ? 'page' : undefined}
+                        onClick={() => handleCurrent(item.href)}
                       >
                         {item.name}
-                      </a>
+                      </Link>
                     ))}
                   </div>
                 </div>
@@ -67,17 +75,21 @@ export default function MyNavbar() {
           <Disclosure.Panel className="sm:hidden">
             <div className="space-y-1 px-2 pb-3 pt-2">
               {navigation.map((item) => (
-                <Disclosure.Button
-                  key={item.name}
-                  as="a"
-                  href={item.href}
-                  className={classNames(
-                    item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                    'block rounded-md px-3 pb-0 text-base font-medium'
-                  )}
-                  aria-current={item.current ? 'page' : undefined}
-                >
-                  {item.name}
+                <Disclosure.Button>
+                  <Link
+                        key={item.name}
+                        activeClass='active'
+                        smooth 
+                        spy 
+                        to={item.href}
+                        className={classNames(
+                          current === item.href ? 'bg-[#242a2f] text-[#bd6507] pb-3.5' : 'text-gray-300 hover:text-white',
+                          'px-3 py-2 text-l font-semibold'
+                        )}
+                        onClick={() => handleCurrent(item.href)}
+                      >
+                        {item.name}
+                      </Link>
                 </Disclosure.Button>
               ))}
             </div>

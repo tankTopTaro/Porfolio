@@ -6,15 +6,14 @@ export default function HeroSection() {
      <section className="h-screen mx-auto px-3 py-36" id="home">
         <div className="flex items-center justify-center">
           <div className="p-2">
-            <h1 className="text-9xl dark:text-white">Kevin <span className="font-bold text-[#bd6507]">Balmores</span></h1>
+            <h1 className="sm:text-9xl text-6xl dark:text-white">Kevin <span className="font-bold text-[#bd6507]">Balmores</span></h1>
             <hr className="w-1/3 border-4" />
             <div className='dark:text-white'>
               <TypeAnimation
                 sequence={[
-                  // Same substring at the start will only be typed out once, initially
-                  'I am a Programmer',
-                  3000, // wait 1s before replacing "Mice" with "Hamsters"
-                  'I am a Web Developer',
+                  'Programmer',
+                  3000,
+                  'Web Developer',
                   3000,
                 ]}
                 wrapper="span"
@@ -37,6 +36,16 @@ export default function HeroSection() {
             </div>
           </div>
         </div>
+
+        <style jsx>{`
+        @media (max-width: 768px) {
+          .h-screen {
+            background-image: url('https://res.cloudinary.com/delgya5vj/image/upload/w_1000,h_1000,c_limit/v1677062074/profile_pyzs83.png');
+            background-repeat: no-repeat;
+            background-size: cover;
+          }
+        }
+      `}</style>
      </section>
   )
 }

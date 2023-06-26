@@ -1,5 +1,7 @@
 import HeroSection from "./components/HeroSection"
 import MyNavbar from "./components/Navbar"
+import Gallery from "./components/Gallery"
+import Contact from "./components/Contact"
 
 function App() {
 
@@ -7,6 +9,8 @@ function App() {
     <>
     <MyNavbar />
     <HeroSection />
+    <Gallery />
+    <Contact />
     </>
   )
 }
