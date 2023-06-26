@@ -1,4 +1,5 @@
-import React from 'react'
+import React, {useState} from 'react'
+import ProjectModal from './ProjectModal'
 
 const projects = [
     {src: 'https://res.cloudinary.com/delgya5vj/image/upload/v1687739845/portfolio_projects/tea_lrpt9y.png', alt: 'tea'},
@@ -16,6 +17,21 @@ const projects = [
 ]
 
 const Gallery = () => {
+    let [isOpen, setIsOpen] = useState(false)
+
+    function closeModal() {
+        setIsOpen(false)
+    }
+
+    function openModal() {
+        setIsOpen(true)
+    }
+
+    function openDetails(id) {
+        console.log(id)
+        openModal()
+    }
+
     function chunkArray(array, size) {
         const result = []
         for (let i = 0; i < array.length; i += size) {
@@ -25,7 +41,7 @@ const Gallery = () => {
     }
 
     return (
-        <section className="h-screen mx-auto mt-16 px-9 py-6" id="projects">
+        <section className="h-screen mx-auto mt-20 px-9 py-1 6" id="projects">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 {chunkArray(projects, 3).map((chunk, index) => (
                     <div key={index} className="grid gap-4 ">
@@ -33,12 +49,14 @@ const Gallery = () => {
                             <div key={subIndex}>
                                 <img 
                                 className="h-auto max-w-full rounded-lg border border-gray-300 dark:border-white shadow-lg dark:drop-shadow-[0_10px_8px_rgba(255,255,255,0.25)]" 
-                                src={project.src} alt={project.alt} />
+                                src={project.src} alt={project.alt} 
+                                onClick={() => openDetails(project.alt)}/>
                             </div>
                         ))}
                     </div>
                 ))}
             </div>
+            {isOpen && <ProjectModal isOpen={isOpen} closeModal={closeModal} />}
         </section>
     )
 }
